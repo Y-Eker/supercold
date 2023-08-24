@@ -9,13 +9,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float velocityCap;
     [SerializeField] float playerSpeed;
     [SerializeField] float decelerationSpeed;
+    [SerializeField] float gravityMultiplier;
     private float decelerationSpeedZ;
     private float decelerationSpeedX;
     private float horizontalInput;
     private float verticalInput;
     void Start()
     {
-        
+        Physics.gravity = Physics.gravity * gravityMultiplier;
     }
 
     void Update()
@@ -39,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (horizontalInput == 0 && playerRb.velocity.x != 0)
         {
-            /*
+          
             if (playerRb.velocity.x < 0)
             {
                 playerRb.AddForce(transform.right * decelerationSpeed, ForceMode.Force);
@@ -48,21 +49,21 @@ public class PlayerMovement : MonoBehaviour
             {
                 playerRb.AddForce(transform.right * -decelerationSpeed, ForceMode.Force);
             }
-            */
-            playerRb.velocity = new Vector3(Mathf.SmoothDamp(playerRb.velocity.x, 0, ref decelerationSpeedX, decelerationSpeed),playerRb.velocity.y, playerRb.velocity.z);
+          
+            //playerRb.velocity = new Vector3(Mathf.SmoothDamp(playerRb.velocity.x, 0, ref decelerationSpeedX, decelerationSpeed),playerRb.velocity.y, playerRb.velocity.z);
         }
         if (verticalInput == 0 && playerRb.velocity.z != 0)
         {
-            /*if (playerRb.velocity.z < 0)
+            if (playerRb.velocity.z < 0)
             {
                 playerRb.AddForce(transform.forward * decelerationSpeed, ForceMode.Force);
             }
             if (playerRb.velocity.z > 0)
             {
                 playerRb.AddForce(transform.forward * -decelerationSpeed, ForceMode.Force);
-            }*/
+            }
 
-            playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y, Mathf.SmoothDamp(playerRb.velocity.z, 0, ref decelerationSpeedZ, decelerationSpeed));
+            //playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y, Mathf.SmoothDamp(playerRb.velocity.z, 0, ref decelerationSpeedZ, decelerationSpeed));
         }
     }
 

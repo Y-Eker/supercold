@@ -579,7 +579,7 @@ Rigidbody:
   m_GameObject: {fileID: 1848109388}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -604,7 +604,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1848109388}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 9791579c6a1af28449ae9b882444f8db, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -701,7 +701,8 @@ MonoBehaviour:
   playerRb: {fileID: 1848109389}
   velocityCap: 10
   playerSpeed: 1
-  decelerationSpeed: 15
+  decelerationSpeed: 30
+  gravityMultiplier: 3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
