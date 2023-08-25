@@ -5,65 +5,70 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Movement")]
     [SerializeField] Rigidbody playerRb;
-    [SerializeField] float velocityCap;
-    [SerializeField] float playerSpeed;
-    [SerializeField] float decelerationSpeed;
-    [SerializeField] float gravityMultiplier;
-    private float decelerationSpeedZ;
-    private float decelerationSpeedX;
+    [SerializeField] float speed;
+    [SerializeField] float speedLimit;
+    [SerializeField] float groundDrag;
+    [Header("Ground Check")]
+    [SerializeField] LayerMask groundLayer;
+    [SerializeField] float playerHeight;
+    [SerializeField] float raycastLengthAddition;
+    private Vector3 moveDirection;
+    private Vector3 currentVelocity;
     private float horizontalInput;
     private float verticalInput;
+    private bool onGround;
+    
     void Start()
     {
-        Physics.gravity = Physics.gravity * gravityMultiplier;
+        currentVelocity = new Vector3(0, 0, 0);
     }
 
     void Update()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
+        // Gets Movement Input
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
+    }
+
+    void MovePlayer()
+    {
+        // Sets The Move Direction
+        moveDirection = (transform.forward * verticalInput + transform.right * horizontalInput).normalized;
+
+        // Adds Force To The Direction
+        playerRb.AddForce(moveDirection * speed, ForceMode.Force);
+
+    }
+    
+    void GroundCheck()
+    {
+        onGround = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + raycastLengthAddition, groundLayer);
     }
 
     private void FixedUpdate()
     {
-        MoveCharacter();
+        GroundCheck();
+        if (onGround)
+        {
+            playerRb.drag = groundDrag;
+        }
+        else
+        {
+            playerRb.drag = 0;
+        }
+        MovePlayer();
+        SpeedLimit();
     }
     
-    private void MoveCharacter()
+    void SpeedLimit()
     {
-        playerRb.AddForce(transform.forward * verticalInput * playerSpeed, ForceMode.VelocityChange);
-        playerRb.AddForce(transform.right * horizontalInput * playerSpeed, ForceMode.VelocityChange);
-        if (playerRb.velocity.x > velocityCap || playerRb.velocity.x < -velocityCap || playerRb.velocity.z > velocityCap || playerRb.velocity.z < -velocityCap) 
+        currentVelocity.x = playerRb.velocity.x; currentVelocity.z = playerRb.velocity.z;
+        if (currentVelocity.magnitude > speedLimit)
         {
-            playerRb.velocity = Vector3.ClampMagnitude(playerRb.velocity, velocityCap);
-        }
-        if (horizontalInput == 0 && playerRb.velocity.x != 0)
-        {
-          
-            if (playerRb.velocity.x < 0)
-            {
-                playerRb.AddForce(transform.right * decelerationSpeed, ForceMode.Force);
-            }
-            if (playerRb.velocity.x > 0)
-            {
-                playerRb.AddForce(transform.right * -decelerationSpeed, ForceMode.Force);
-            }
-          
-            //playerRb.velocity = new Vector3(Mathf.SmoothDamp(playerRb.velocity.x, 0, ref decelerationSpeedX, decelerationSpeed),playerRb.velocity.y, playerRb.velocity.z);
-        }
-        if (verticalInput == 0 && playerRb.velocity.z != 0)
-        {
-            if (playerRb.velocity.z < 0)
-            {
-                playerRb.AddForce(transform.forward * decelerationSpeed, ForceMode.Force);
-            }
-            if (playerRb.velocity.z > 0)
-            {
-                playerRb.AddForce(transform.forward * -decelerationSpeed, ForceMode.Force);
-            }
-
-            //playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y, Mathf.SmoothDamp(playerRb.velocity.z, 0, ref decelerationSpeedZ, decelerationSpeed));
+            Vector3 LimitedVel = currentVelocity.normalized * speedLimit;
+            playerRb.velocity = new Vector3(LimitedVel.x, playerRb.velocity.y, LimitedVel.z);
         }
     }
 
