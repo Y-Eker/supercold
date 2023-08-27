@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public Vector3 currentVelocity;
     [Header("Movement")]
     [SerializeField] Rigidbody playerRb;
     [SerializeField] float speed;
@@ -15,14 +16,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float playerHeight;
     [SerializeField] float raycastLengthAddition;
     private Vector3 moveDirection;
-    private Vector3 currentVelocity;
-    private float horizontalInput;
-    private float verticalInput;
+    public float horizontalInput;
+    public float verticalInput;
     private bool onGround;
     
     void Start()
     {
         currentVelocity = new Vector3(0, 0, 0);
+        Time.timeScale = 0f;
     }
 
     void Update()
@@ -30,6 +31,23 @@ public class PlayerMovement : MonoBehaviour
         // Gets Movement Input
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+        SlowTime();
+    }
+
+    void SlowTime()
+    {
+        if (Math.Abs(horizontalInput) > 0 || Math.Abs(verticalInput) > 0)
+        {
+            Time.timeScale = 0.3f + Mathf.Clamp(currentVelocity.magnitude, 0f, 0.7f);
+        }
+        else
+        {
+            Time.timeScale = 0.02f;
+        }
+        if (Time.timeScale != 1)
+        {
+            Time.fixedDeltaTime = 0.02f * Time.timeScale;
+        }
     }
 
     void MovePlayer()

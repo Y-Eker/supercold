@@ -6,8 +6,8 @@ public class MouseLook : MonoBehaviour
 {
     [SerializeField] Transform playerTransform;
     [SerializeField] float sensitivity;
-    private float mouseX;
-    private float mouseY;
+    public float mouseX;
+    public float mouseY;
     private float xRotation;
     private float yRotation;
     // Start is called before the first frame update
@@ -20,8 +20,8 @@ public class MouseLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensitivity;
-        mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensitivity;
+        mouseX = Input.GetAxisRaw("Mouse X") * Time.unscaledDeltaTime * sensitivity;
+        mouseY = Input.GetAxisRaw("Mouse Y") * Time.unscaledDeltaTime * sensitivity;
 
         yRotation += mouseX;
         xRotation -= mouseY;
