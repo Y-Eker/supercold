@@ -36,18 +36,16 @@ public class PlayerMovement : MonoBehaviour
 
     void SlowTime()
     {
+        Vector3 clampedCurrVel = currentVelocity;
         if (Math.Abs(horizontalInput) > 0 || Math.Abs(verticalInput) > 0)
         {
-            Time.timeScale = 0.3f + Mathf.Clamp(currentVelocity.magnitude, 0f, 0.7f);
+            Time.timeScale = 0.3f + Mathf.Clamp(clampedCurrVel.magnitude, 0f, 0.7f);
         }
         else
         {
             Time.timeScale = 0.02f;
         }
-        if (Time.timeScale != 1)
-        {
-            Time.fixedDeltaTime = 0.02f * Time.timeScale;
-        }
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
     }
 
     void MovePlayer()

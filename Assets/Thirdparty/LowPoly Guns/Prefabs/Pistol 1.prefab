@@ -128,7 +128,7 @@ MonoBehaviour:
   firePos: {fileID: 245471724855325653}
   mainCam: {fileID: 0}
   bulletsPerTap: 1
-  reloadTime: 2.5
+  reloadTime: 1.5
   spread: 0
   fireRate: 5
   timeBetweenShots: 0
