@@ -41,11 +41,6 @@ public class PlayerMovement : MonoBehaviour
                 timeSpeedAmount = 1f;
             }
             TimeManager.Instance.SpeedUpInstant(timeSpeedAmount, 0.05f);
-            // Mathf.Clamp(clampedCurrVel.magnitude, TimeManager.Instance.timeSlowed, 1f)
-        }
-        else
-        {
-            
         }
     }
 

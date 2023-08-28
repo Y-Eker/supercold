@@ -8,8 +8,7 @@ public class GunScript : MonoBehaviour
 
     [Header("References")]
     [SerializeField] GameObject bulletPrefab;
-    [SerializeField] GameObject muzzleFlash;
-    [SerializeField] GameObject bulletImpact;
+    [SerializeField] ParticleSystem muzzleFlash;
     [SerializeField] Transform firePos;
     [SerializeField] Camera mainCam;
 
@@ -52,7 +51,7 @@ public class GunScript : MonoBehaviour
         }
         if (shootPressed)
         {
-            TimeManager.Instance.SpeedUpInstant(1, 0.15f);
+            TimeManager.Instance.SpeedUpInstant(0.8f, 0.1f);
         }
         if (readyToShoot && shootPressed && !reloading && bulletsLeft > 0)
         {
@@ -68,7 +67,7 @@ public class GunScript : MonoBehaviour
     void Shoot()
     {
         readyToShoot = false;
-
+        muzzleFlash.Play();
 
         Ray ray = mainCam.ViewportPointToRay(center);
         RaycastHit hit;
@@ -86,7 +85,7 @@ public class GunScript : MonoBehaviour
         directionWithSpread = directionWithoutSpread + new Vector3(Random.Range(-spread, spread), Random.Range(-spread, spread), 0f);
         directionWithSpread.Normalize();
         // Instantiates a bullet and sets its forward direction to the desired direction
-        GameObject currentBullet = Instantiate(bulletPrefab, firePos.position, Quaternion.identity);
+        GameObject currentBullet = Instantiate(bulletPrefab, firePos.position, firePos.rotation);
         currentBullet.transform.forward = directionWithSpread;
         // Gets Rigidbody of the Bullet and applies a force to it
         Rigidbody currentBulletRb = currentBullet.GetComponent<Rigidbody>();

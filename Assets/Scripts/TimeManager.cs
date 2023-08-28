@@ -22,14 +22,6 @@ public class TimeManager : MonoBehaviour
         Time.timeScale = timeSlowed;
     }
 
-    public void SpeedUpContunious(float speedAmount, float speedDuration)
-    {
-        if (speedUpLerpRoutine  != null) 
-        {
-            //
-        }
-    }
-
     public void SpeedUpInstant(float speedAmount, float speedDuration)
     {
         Time.timeScale = speedAmount;
@@ -50,19 +42,6 @@ public class TimeManager : MonoBehaviour
         }
         Time.timeScale = timeSlowed;
     }
-
-    /*
-    IEnumerator SpeedUpLerp(float speedAmount, float speedDuration)
-    {
-        float counter = 0;
-        while (counter < speedDuration)
-        {
-            counter += Time.unscaledDeltaTime;
-            Time.timeScale = Mathf.Lerp(timeSlowed, speedAmount, counter / speedDuration);
-            yield return null;
-        }
-    }
-    */
 
     private void Update()
     {

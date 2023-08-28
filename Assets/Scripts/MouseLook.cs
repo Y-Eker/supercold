@@ -5,7 +5,7 @@ using UnityEngine;
 public class MouseLook : MonoBehaviour
 {
     [SerializeField] Transform playerTransform;
-    [SerializeField] float sensitivity;
+    [SerializeField] float sensitivity, timeSpeedAmount;
     public float mouseX;
     public float mouseY;
     private float xRotation;
@@ -22,6 +22,11 @@ public class MouseLook : MonoBehaviour
     {
         mouseX = Input.GetAxisRaw("Mouse X") * Time.unscaledDeltaTime * sensitivity;
         mouseY = Input.GetAxisRaw("Mouse Y") * Time.unscaledDeltaTime * sensitivity;
+
+        if (Mathf.Abs(mouseX) > 0 || Mathf.Abs(mouseY) > 0)
+        {
+            TimeManager.Instance.SpeedUpInstant(timeSpeedAmount, 0.05f);
+        }
 
         yRotation += mouseX;
         xRotation -= mouseY;
