@@ -1388,16 +1388,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentVelocity: {x: 0, y: 0, z: 0}
   playerRb: {fileID: 1848109389}
-  speed: 100
+  speed: 200
   speedLimit: 13
-  groundDrag: 50
+  groundDrag: 15
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
   playerHeight: 3
   raycastLengthAddition: 0.2
-  horizontalInput: 0
-  verticalInput: 0
 --- !u!1 &1962042502
 GameObject:
   m_ObjectHideFlags: 0

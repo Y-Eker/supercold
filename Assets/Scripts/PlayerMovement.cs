@@ -16,8 +16,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float playerHeight;
     [SerializeField] float raycastLengthAddition;
     private Vector3 moveDirection;
-    public float horizontalInput;
-    public float verticalInput;
+    private float horizontalInput;
+    private float verticalInput;
     private bool onGround;
     
     void Start()
@@ -34,7 +34,14 @@ public class PlayerMovement : MonoBehaviour
         Vector3 clampedCurrVel = currentVelocity;
         if (Math.Abs(horizontalInput) > 0 || Math.Abs(verticalInput) > 0)
         {
-           TimeManager.Instance.SpeedUpInstant(Mathf.Clamp(clampedCurrVel.magnitude, 0.02f, 1f), 0.05f);
+            float timeSpeedAmount = 0f;
+            timeSpeedAmount = Mathf.Lerp(TimeManager.Instance.timeSlowed, 1, currentVelocity.magnitude / speedLimit);
+            if (timeSpeedAmount > 0.75f)
+            {
+                timeSpeedAmount = 1f;
+            }
+            TimeManager.Instance.SpeedUpInstant(timeSpeedAmount, 0.05f);
+            // Mathf.Clamp(clampedCurrVel.magnitude, TimeManager.Instance.timeSlowed, 1f)
         }
         else
         {

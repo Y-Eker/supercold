@@ -6,7 +6,7 @@ public class TimeManager : MonoBehaviour
 {
     public static TimeManager Instance;
     public float timeVal;
-    [SerializeField] float timeSlowed;
+    public float timeSlowed;
     private Coroutine slowdown, speedUpLerpRoutine;
     private void Awake()
     {
