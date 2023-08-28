@@ -5,7 +5,9 @@ using UnityEngine;
 public class TimeManager : MonoBehaviour
 {
     public static TimeManager Instance;
+    public float timeVal;
     [SerializeField] float timeSlowed;
+    private Coroutine slowdown, speedUpLerpRoutine;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -20,24 +22,51 @@ public class TimeManager : MonoBehaviour
         Time.timeScale = timeSlowed;
     }
 
-    public void SpeedUpLerp(float speedAmount, float speedDuration)
+    public void SpeedUpContunious(float speedAmount, float speedDuration)
     {
-
+        if (speedUpLerpRoutine  != null) 
+        {
+            //
+        }
     }
 
     public void SpeedUpInstant(float speedAmount, float speedDuration)
     {
         Time.timeScale = speedAmount;
-        Invoke("SlowDownSpeed", speedDuration);
+        if (slowdown != null)
+        {
+            StopCoroutine(slowdown);
+        }
+        slowdown = StartCoroutine(SlowDownRoutine(speedDuration));
     }
 
-    void SlowDownSpeed()
+    IEnumerator SlowDownRoutine(float duration)
     {
+        float counter = 0;
+        while (counter < duration)
+        {
+            counter += Time.unscaledDeltaTime;
+            yield return null; 
+        }
         Time.timeScale = timeSlowed;
     }
+
+    /*
+    IEnumerator SpeedUpLerp(float speedAmount, float speedDuration)
+    {
+        float counter = 0;
+        while (counter < speedDuration)
+        {
+            counter += Time.unscaledDeltaTime;
+            Time.timeScale = Mathf.Lerp(timeSlowed, speedAmount, counter / speedDuration);
+            yield return null;
+        }
+    }
+    */
 
     private void Update()
     {
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
+        timeVal = Time.timeScale;
     }
 }

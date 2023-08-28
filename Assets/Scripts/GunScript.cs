@@ -52,7 +52,7 @@ public class GunScript : MonoBehaviour
         }
         if (shootPressed)
         {
-            TimeManager.Instance.SpeedUpInstant(1, 0.3f);
+            TimeManager.Instance.SpeedUpInstant(1, 0.15f);
         }
         if (readyToShoot && shootPressed && !reloading && bulletsLeft > 0)
         {

@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 clampedCurrVel = currentVelocity;
         if (Math.Abs(horizontalInput) > 0 || Math.Abs(verticalInput) > 0)
         {
-            
+           TimeManager.Instance.SpeedUpInstant(Mathf.Clamp(clampedCurrVel.magnitude, 0.02f, 1f), 0.05f);
         }
         else
         {
