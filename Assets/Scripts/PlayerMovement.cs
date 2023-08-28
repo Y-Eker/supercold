@@ -23,7 +23,6 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         currentVelocity = new Vector3(0, 0, 0);
-        Time.timeScale = 0f;
     }
 
     void Update()
@@ -31,21 +30,16 @@ public class PlayerMovement : MonoBehaviour
         // Gets Movement Input
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-        SlowTime();
-    }
 
-    void SlowTime()
-    {
         Vector3 clampedCurrVel = currentVelocity;
         if (Math.Abs(horizontalInput) > 0 || Math.Abs(verticalInput) > 0)
         {
-            Time.timeScale = 0.3f + Mathf.Clamp(clampedCurrVel.magnitude, 0f, 0.7f);
+            
         }
         else
         {
-            Time.timeScale = 0.02f;
+            
         }
-        Time.fixedDeltaTime = 0.02f * Time.timeScale;
     }
 
     void MovePlayer()

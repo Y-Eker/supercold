@@ -50,6 +50,10 @@ public class GunScript : MonoBehaviour
         {
             shootPressed = Input.GetKeyDown(KeyCode.Mouse0);
         }
+        if (shootPressed)
+        {
+            TimeManager.Instance.SpeedUpInstant(1, 0.3f);
+        }
         if (readyToShoot && shootPressed && !reloading && bulletsLeft > 0)
         {
             bulletsShot = 0;
