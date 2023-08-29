@@ -25,7 +25,10 @@ public class MouseLook : MonoBehaviour
 
         if (Mathf.Abs(mouseX) > 0 || Mathf.Abs(mouseY) > 0)
         {
-            TimeManager.Instance.SpeedUpInstant(timeSpeedAmount, 0.05f);
+            if (TimeManager.Instance.timeVal == 0.02f)
+            {
+                TimeManager.Instance.SpeedUpInstant(timeSpeedAmount, 0.05f);
+            }
         }
 
         yRotation += mouseX;

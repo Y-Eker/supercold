@@ -35,7 +35,7 @@ public class GunScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        mainCam = Camera.main;
     }
 
     // Update is called once per frame
@@ -67,7 +67,7 @@ public class GunScript : MonoBehaviour
     void Shoot()
     {
         readyToShoot = false;
-        muzzleFlash.Play();
+        // muzzleFlash.Play();
 
         Ray ray = mainCam.ViewportPointToRay(center);
         RaycastHit hit;
