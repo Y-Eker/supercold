@@ -110,7 +110,7 @@ public class ThrowableScript : MonoBehaviour
         }
         else
         {
-            direction = ray.GetPoint(50).normalized;
+            direction = (ray.GetPoint(50) - firePos.transform.position).normalized;
         }
         throwableRb.AddForce(direction * throwForceForwards, ForceMode.Impulse);
         throwableRb.AddForce(firePos.up * throwForceUpwards, ForceMode.Impulse);

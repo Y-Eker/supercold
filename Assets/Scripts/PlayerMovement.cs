@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask groundLayer;
     [SerializeField] float playerHeight;
     [SerializeField] float raycastLengthAddition;
-    private Vector3 moveDirection;
+    private Vector3 moveDirection, stoppingVelocity;
     private float horizontalInput;
     private float verticalInput;
     private bool onGround;
@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         currentVelocity = new Vector3(0, 0, 0);
+        stoppingVelocity = new Vector3(0, 0, 0);
     }
 
     void Update()
@@ -36,11 +37,16 @@ public class PlayerMovement : MonoBehaviour
         {
             float timeSpeedAmount = 0f;
             timeSpeedAmount = Mathf.Lerp(TimeManager.Instance.timeSlowed, 1, currentVelocity.magnitude / speedLimit);
-            if (timeSpeedAmount > 0.75f)
+            if (timeSpeedAmount > 0.7f)
             {
                 timeSpeedAmount = 1f;
             }
             TimeManager.Instance.SpeedUpInstant(timeSpeedAmount, 0.05f);
+        }
+        else
+        {
+            stoppingVelocity.y = playerRb.velocity.y;
+            playerRb.velocity = stoppingVelocity;
         }
     }
 
